@@ -1,0 +1,230 @@
+/* style.css - Gaya elegan modern VORA */
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    color: #1e1e1e;
+    line-height: 1.6;
+    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    transition: background 0.5s;
+}
+
+h1,
+h2,
+h4 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a1a;
+}
+
+h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a1a;
+    text-align: center;
+    font-size: xx-large;
+}
+
+.logo {
+  width: 15%;
+  height: auto;
+  object-fit: contain;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #000;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    background-color: #fff;
+    flex-wrap: wrap;
+    gap: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    margin: 2rem;
+}
+
+.hero:nth-of-type(2) {
+    flex-direction: row-reverse;
+}
+
+.hero-text {
+    max-width: 500px;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-image img {
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section-info, .promo-banner {
+    background-color: #eaeaea;
+    margin: 2rem;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.section-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.section-info li {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.btn,
+.btn-small {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn:hover,
+.btn-small:hover {
+    background-color: #333;
+}
+
+.btn-small {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.produk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.produk-item {
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.produk-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-image img {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.detail-info {
+    max-width: 500px;
+}
+
+.tentang-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #fafafa;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image img {
+        max-width: 100%;
+    }
+
+    .detail-container {
+        flex-direction: column;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+#snow-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index:-1;
+}

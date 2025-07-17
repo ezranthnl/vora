@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BGM</title>
+</head>
+<body>
+  <audio id="bgm" autoplay loop>
+    <source src="assets/audio/backsound.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const audio = document.getElementById("bgm");
+    audio.volume = 0.05;
+
+    window.addEventListener("message", (event) => {
+      if (event.data === "playMusic") {
+        audio.play();
+      } else if (event.data === "pauseMusic") {
+        audio.pause();
+      }
+    });
+  </script>
+</body>
+</html>
