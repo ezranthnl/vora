@@ -136,7 +136,7 @@ function startSnowEffect() {
   let height = (canvas.height = window.innerHeight);
 
   const flakes = [];
-  const numFlakes = 40;
+  const numFlakes = 60;
 
   for (let i = 0; i < numFlakes; i++) {
     flakes.push({
