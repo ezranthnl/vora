@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   const audio = document.getElementById("bgm");
                   audio.volume = 0.2;
                   window.onbeforeunload = () => audio.pause();
-                <\/script>
+                </script>
               </body>
             </html>
           `);
@@ -88,20 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Efek salju
   startSnowEffect();
-
-  // Testimoni form
-  const form = document.getElementById("testimoniForm");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const nama = document.getElementById("nama").value;
-      const email = document.getElementById("email").value;
-      const pesan = document.getElementById("pesan").value;
-
-      alert(`Terima kasih, ${nama}! Testimoni kamu telah dikirim.`);
-      form.reset();
-    });
-  }
 });
 
 // Data produk
@@ -158,7 +144,7 @@ function startSnowEffect() {
 
   function drawFlakes() {
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
     ctx.beginPath();
     flakes.forEach((f) => {
       ctx.moveTo(f.x, f.y);
