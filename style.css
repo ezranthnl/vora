@@ -6,6 +6,7 @@ body {
     background-color: #ffffff;
     color: #1e1e1e;
     line-height: 1.6;
+    backdrop-filter: blur(5px);
     background: linear-gradient(to bottom, #ffffff, #f2f2f2);
     transition: background 0.5s;
 }

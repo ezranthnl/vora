@@ -32,16 +32,26 @@ async function tampilkanTestimoni() {
 
 
   
-  data.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = "testimoni-card";
-    div.innerHTML = `
-      <p><strong>${item.nama}</strong></p>
-      <p>"${item.pesan}"</p>
-    `;
-    list.appendChild(div);
-  });
-  
+ data.forEach((item) => {
+  const div = document.createElement("div");
+  div.className = "testimoni-card";
+
+  const nama = item.nama || "Anonim";
+  const namaSensor = sensorNama(nama);
+
+  div.innerHTML = `
+    <p><strong>${namaSensor}</strong></p>
+    <p>"${item.pesan}"</p>
+  `;
+  list.appendChild(div);
+});
+function sensorNama(nama) {
+  if (nama.length <= 2) {
+    return nama[0] + "*";
+  }
+  return nama.slice(0, 2) + "*".repeat(nama.length - 2);
+}
+
   
 }
 
