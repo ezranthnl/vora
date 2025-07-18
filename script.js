@@ -92,40 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Testimoni form
   const form = document.getElementById("testimoniForm");
   if (form) {
-    form.addEventListener("submit", async function (e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
       const nama = document.getElementById("nama").value;
+      const email = document.getElementById("email").value;
       const pesan = document.getElementById("pesan").value;
-      const rating = document.querySelector('input[name="rating"]:checked');
-
-      if (!rating) {
-        alert("Silakan beri rating sebelum mengirim testimoni.");
-        return;
-      }
-
-      const { data, error } = await supabase.from("testimoni").insert([
-        {
-          nama,
-          pesan,
-          rating: parseInt(rating.value),
-        },
-      ]);
-
-      if (error) {
-        alert("Gagal mengirim testimoni. Silakan coba lagi.");
-        console.error(error);
-        return;
-      }
 
       alert(`Terima kasih, ${nama}! Testimoni kamu telah dikirim.`);
       form.reset();
-      ambilTestimoni();
     });
-  }
-
-  // Ambil testimoni jika ada elemen list
-  if (document.getElementById("testimoni-list")) {
-    ambilTestimoni();
   }
 });
 
@@ -215,32 +190,5 @@ function startSnowEffect() {
   });
 
   animate();
-}
-
-async function ambilTestimoni() {
-  const { data, error } = await supabase
-    .from("testimoni")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .limit(5);
-
-  if (error) {
-    console.error("Gagal ambil testimoni:", error.message);
-    return;
-  }
-
-  const listEl = document.getElementById("testimoni-list");
-  listEl.innerHTML = "";
-
-  data.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = "testimoni-item";
-    div.innerHTML = `
-      <h4>${item.nama}</h4>
-      <div class="rating">${"★".repeat(item.rating)}${"☆".repeat(5 - item.rating)}</div>
-      <p>${item.pesan}</p>
-    `;
-    listEl.appendChild(div);
-  });
 }
 
