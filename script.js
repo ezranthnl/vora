@@ -1,9 +1,5 @@
 // main.js - Efek interaktif ringan untuk VORA
 
-const supabaseUrl = "https://eagsfjcsjmmholoekiln.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhZ3NmamNzam1taG9sb2VraWxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4MDg2NjAsImV4cCI6MjA2ODM4NDY2MH0.uG-6ofh_TwvuOLpboOp94PbG1FyBQrCerwutuuq0Xa8";
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
 document.addEventListener("DOMContentLoaded", () => {
   // Logo scroll to top
   const logo = document.querySelector(".logo");
@@ -93,44 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Efek salju
   startSnowEffect();
 
-  // Rating interaktif
-  // Rating interaktif
-  // Rating interaktif
-  const ratingStars = document.querySelectorAll("#rating span");
-  const ratingValue = document.getElementById("ratingValue");
-
-  let selectedRating = 0;
-
-  if (ratingStars && ratingValue) {
-    ratingStars.forEach((star) => {
-      const starValue = parseInt(star.getAttribute("data-value"));
-
-      // Hover
-      star.addEventListener("mouseover", () => {
-        updateStarVisual(starValue);
-      });
-
-      // Reset ke selected saat mouse keluar
-      star.addEventListener("mouseout", () => {
-        updateStarVisual(selectedRating);
-      });
-
-      // Klik bintang
-      star.addEventListener("click", () => {
-        selectedRating = starValue;
-        ratingValue.value = selectedRating;
-        updateStarVisual(selectedRating);
-      });
-    });
-  }
-
-  function updateStarVisual(val) {
-    ratingStars.forEach((s) => {
-      const sVal = parseInt(s.getAttribute("data-value"));
-      s.classList.toggle("active", sVal <= val);
-    });
-  }
-
   // Testimoni form
   const form = document.getElementById("testimoniForm");
   if (form) {
@@ -138,9 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const nama = document.getElementById("nama").value;
       const pesan = document.getElementById("pesan").value;
-      const rating = parseInt(document.getElementById("ratingValue").value);
+      const rating = document.querySelector('input[name="rating"]:checked');
 
-      if (!rating || rating < 1 || rating > 5) {
+      if (!rating) {
         alert("Silakan beri rating sebelum mengirim testimoni.");
         return;
       }
@@ -149,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           nama,
           pesan,
-          rating,
+          rating: parseInt(rating.value),
         },
       ]);
 
@@ -285,3 +243,4 @@ async function ambilTestimoni() {
     listEl.appendChild(div);
   });
 }
+
