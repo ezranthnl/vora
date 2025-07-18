@@ -126,74 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
   }
-
-  // Musik
-  const playBtn = document.getElementById("play-music-btn");
-  if (playBtn) {
-    playBtn.addEventListener("click", () => {
-      if (!localStorage.getItem("voraMusicWindow")) {
-        const musicWindow = window.open("", "voraMusic", "width=1,height=1,left=-1000,top=-1000");
-        if (musicWindow) {
-          musicWindow.document.write(`
-            <html><body style="margin:0;background:black;">
-              <audio id="bgm" autoplay loop>
-                <source src="assets/audio/backsound.mp3" type="audio/mpeg">
-              </audio>
-              <script>
-                const audio = document.getElementById("bgm");
-                audio.volume = 0.2;
-                window.onbeforeunload = () => audio.pause();
-              </script>
-            </body></html>
-          `);
-          localStorage.setItem("voraMusicWindow", "true");
-          playBtn.textContent = "Playing... 🎵";
-          playBtn.disabled = true;
-        } else {
-          alert("Popup diblokir! Aktifkan pop-up untuk memutar musik.");
-        }
-      } else {
-        alert("Musik sudah diputar di halaman sebelumnya.");
-      }
-    });
-  }
-
-  tampilkanTestimoni(); // ⬅️ ini wajib supaya testimoni muncul
-
-  startSnowEffect();
-});
-
-// --- Data Produk ---
-const detailData = {
-  aethera: {
-    nama: "Aethera",
-    img: "assets/img/1.jpg",
-    top: "Bergamot",
-    middle: "White Tea, Green Tea",
-    base: "White Musk",
-    deskripsi:
-      "Aethera adalah perpaduan wangi segar dan lembut. Cocok untuk suasana santai dan formal.",
-  },
-  lucida: {
-    nama: "Lucida",
-    img: "assets/img/2.jpg",
-    top: "Lotus, Lavender",
-    middle: "White Tea, Jasmine",
-    base: "White Musk, Vanilla, Cedarwood",
-    deskripsi:
-      "Lucida hadir dengan kelembutan aroma lotus yang bercahaya. Cocok untuk pecinta floral.",
-  },
-  arden: {
-    nama: "Arden",
-    img: "assets/img/3.jpg",
-    top: "Bergamot",
-    middle: "Vanilla, Geranium",
-    base: "Sandalwood, Cedarwood",
-    deskripsi:
-      "Arden menyegarkan dan maskulin dengan sentuhan sandalwood yang elegan.",
-  },
-};
-
 // --- Efek Salju ---
 function startSnowEffect() {
   const canvas = document.getElementById("snow-canvas");
@@ -250,3 +182,71 @@ function startSnowEffect() {
 
   animate();
 }
+
+  // Musik
+  const playBtn = document.getElementById("play-music-btn");
+  if (playBtn) {
+    playBtn.addEventListener("click", () => {
+      if (!localStorage.getItem("voraMusicWindow")) {
+        const musicWindow = window.open("", "voraMusic", "width=1,height=1,left=-1000,top=-1000");
+        if (musicWindow) {
+          musicWindow.document.write(`
+            <html><body style="margin:0;background:black;">
+              <audio id="bgm" autoplay loop>
+                <source src="assets/audio/backsound.mp3" type="audio/mpeg">
+              </audio>
+              <script>
+                const audio = document.getElementById("bgm");
+                audio.volume = 0.2;
+                window.onbeforeunload = () => audio.pause();
+              </script>
+            </body></html>
+          `);
+          localStorage.setItem("voraMusicWindow", "true");
+          playBtn.textContent = "Playing... 🎵";
+          playBtn.disabled = true;
+        } else {
+          alert("Popup diblokir! Aktifkan pop-up untuk memutar musik.");
+        }
+      } else {
+        alert("Musik sudah diputar di halaman sebelumnya.");
+      }
+    });
+  }
+  startSnowEffect();
+
+  tampilkanTestimoni(); // ⬅️ ini wajib supaya testimoni muncul
+
+});
+
+// --- Data Produk ---
+const detailData = {
+  aethera: {
+    nama: "Aethera",
+    img: "assets/img/1.jpg",
+    top: "Bergamot",
+    middle: "White Tea, Green Tea",
+    base: "White Musk",
+    deskripsi:
+      "Aethera adalah perpaduan wangi segar dan lembut. Cocok untuk suasana santai dan formal.",
+  },
+  lucida: {
+    nama: "Lucida",
+    img: "assets/img/2.jpg",
+    top: "Lotus, Lavender",
+    middle: "White Tea, Jasmine",
+    base: "White Musk, Vanilla, Cedarwood",
+    deskripsi:
+      "Lucida hadir dengan kelembutan aroma lotus yang bercahaya. Cocok untuk pecinta floral.",
+  },
+  arden: {
+    nama: "Arden",
+    img: "assets/img/3.jpg",
+    top: "Bergamot",
+    middle: "Vanilla, Geranium",
+    base: "Sandalwood, Cedarwood",
+    deskripsi:
+      "Arden menyegarkan dan maskulin dengan sentuhan sandalwood yang elegan.",
+  },
+};
+
