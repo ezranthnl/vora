@@ -6,7 +6,7 @@ body {
     background-color: #ffffff;
     color: #1e1e1e;
     line-height: 1.6;
-    background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background: linear-gradient(to top, #4c4c4e 0%, #f0f0ff 100%);
     transition: background 0.5s;
 }
 
@@ -289,10 +289,13 @@ footer {
     transition: transform 0.2s ease, color 0.3s ease;
     color: #ccc;
 }
-.rating span.active {
-  color: #ffc107;
-  transition: transform 0.3s ease, color 0.3s ease;
+.rating span :active {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.3s ease;
+    color: #f1c40f;
 }
+
 .rating span:hover,
 .rating span:hover ~ span {
     color: #f1c40f;
@@ -380,4 +383,71 @@ footer {
 .testimoni-item .rating {
     color: #f1c40f;
     margin-bottom: 0.5rem;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.close-popup {
+  background-color: #1a1a1a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    font-size: 1rem;
+}
+
+#testimoni-section {
+  padding: 30px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+#testimoni-list {
+  display: grid;
+  gap: 15px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.testimoni-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.testimoni-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+.testimoni-card:hover {
+  transform: translateY(0);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }

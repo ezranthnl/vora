@@ -32,17 +32,6 @@
                     <label for="nama">Nama</label>
                     <input type="text" id="nama" name="nama" placeholder="Nama kamu" required />
 
-                    <label for="rating">Rating</label>
-                    <div id="rating" class="rating">
-                        <span data-value="1">★</span>
-                        <span data-value="2">★</span>
-                        <span data-value="3">★</span>
-                        <span data-value="4">★</span>
-                        <span data-value="5">★</span>
-                    </div>
-                    <input type="hidden" id="ratingValue" name="rating" required>
-
-
                     <label for="pesan">Pesan</label>
                     <textarea id="pesan" name="pesan" rows="5" placeholder="Tulis testimoni kamu di sini..."
                         required></textarea>
@@ -53,11 +42,24 @@
         </section>
     </main>
 
+    <section id="testimoni-section">
+  <h2>Testimoni Pelanggan</h2>
+  <div class="testimoni-grid" id="testimoni-list"></div>
+</section>
+
     <footer class="fade-in">
         <p>&copy; 2025 VORA. All rights reserved.</p>
     </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="script.js"></script>
+<script type="module" src="script.js"></script>
+<div id="popup-thanks" class="popup hidden">
+  <div class="popup-content">
+    <p>Terima kasih sudah mengirim testimoni!</p>
+    <button class="close-popup" id="close-popup">Tutup</button>
+  </div>
+</div>
+
 </body>
 
 </html>

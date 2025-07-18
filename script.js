@@ -1,7 +1,76 @@
-// main.js - Efek interaktif ringan untuk VORA
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
+// --- Supabase ---
+const supabaseUrl = "https://eagsfjcsjmmholoekiln.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhZ3NmamNzam1taG9sb2VraWxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4MDg2NjAsImV4cCI6MjA2ODM4NDY2MH0.uG-6ofh_TwvuOLpboOp94PbG1FyBQrCerwutuuq0Xa8";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// --- Tampilkan testimoni dari Supabase ---
+async function tampilkanTestimoni() {
+  const { data, error } = await supabase
+    .from("testimoni")
+    .select("*")
+    .order("id", { ascending: false });
+    
+
+    console.log("Hasil data dari Supabase:", data);
+
+
+  const list = document.getElementById("testimoni-list");
+  list.innerHTML = "";
+
+  if (error) {
+    console.error("Gagal ambil testimoni:", error.message);
+    list.innerHTML = "<p>Gagal memuat testimoni 😢</p>";
+    return;
+  }
+
+  if (data.length === 0) {
+    list.innerHTML = "<p>Belum ada testimoni.</p>";
+    return;
+  }
+
+
+  
+  data.forEach((item) => {
+    const div = document.createElement("div");
+    div.className = "testimoni-card";
+    div.innerHTML = `
+      <p><strong>${item.nama}</strong></p>
+      <p>"${item.pesan}"</p>
+    `;
+    list.appendChild(div);
+  });
+  
+  
+}
+
+// --- Kirim testimoni ke Supabase + tampil popup ---
+async function kirimTestimoni(nama, pesan) {
+  const { data, error } = await supabase.from("testimoni").insert([{ nama, pesan }]);
+
+  if (error) {
+    console.error("Gagal kirim:", error.message);
+  } else {
+    console.log("Berhasil kirim:", data);
+    await tampilkanTestimoni(); // refresh list
+    document.getElementById("popup-thanks").classList.remove("hidden");
+    document.getElementById("close-popup").addEventListener("click", () => {
+      document.getElementById("popup-thanks").classList.add("hidden");
+    });
+  }
+}
+
+// --- Form submit ---
+document.getElementById("testimoniForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const nama = document.getElementById("nama").value;
+  const pesan = document.getElementById("pesan").value;
+  await kirimTestimoni(nama, pesan);
+});
+
+// --- DOM Loaded ---
 document.addEventListener("DOMContentLoaded", () => {
-  // Logo scroll to top
   const logo = document.querySelector(".logo");
   if (logo) {
     logo.addEventListener("click", () => {
@@ -28,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       observer.observe(el);
     });
 
-  // Detail produk dinamis
+  // Detail produk
   if (window.location.pathname.includes("detail.html")) {
     const params = new URLSearchParams(window.location.search);
     const varian = params.get("varian");
@@ -48,31 +117,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Musik background play 1x seumur hidup halaman
+  // Musik
   const playBtn = document.getElementById("play-music-btn");
-
   if (playBtn) {
     playBtn.addEventListener("click", () => {
       if (!localStorage.getItem("voraMusicWindow")) {
-        const musicWindow = window.open(
-          "",
-          "voraMusic",
-          "width=1,height=1,left=-1000,top=-1000"
-        );
+        const musicWindow = window.open("", "voraMusic", "width=1,height=1,left=-1000,top=-1000");
         if (musicWindow) {
           musicWindow.document.write(`
-            <html>
-              <body style="margin:0;background:black;">
-                <audio id="bgm" autoplay loop>
-                  <source src="assets/audio/backsound.mp3" type="audio/mpeg">
-                </audio>
-                <script>
-                  const audio = document.getElementById("bgm");
-                  audio.volume = 0.2;
-                  window.onbeforeunload = () => audio.pause();
-                </script>
-              </body>
-            </html>
+            <html><body style="margin:0;background:black;">
+              <audio id="bgm" autoplay loop>
+                <source src="assets/audio/backsound.mp3" type="audio/mpeg">
+              </audio>
+              <script>
+                const audio = document.getElementById("bgm");
+                audio.volume = 0.2;
+                window.onbeforeunload = () => audio.pause();
+              </script>
+            </body></html>
           `);
           localStorage.setItem("voraMusicWindow", "true");
           playBtn.textContent = "Playing... 🎵";
@@ -86,11 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Efek salju
+  tampilkanTestimoni(); // ⬅️ ini wajib supaya testimoni muncul
+
   startSnowEffect();
 });
 
-// Data produk
+// --- Data Produk ---
 const detailData = {
   aethera: {
     nama: "Aethera",
@@ -121,7 +184,7 @@ const detailData = {
   },
 };
 
-// Efek salju ringan
+// --- Efek Salju ---
 function startSnowEffect() {
   const canvas = document.getElementById("snow-canvas");
   if (!canvas) return;
@@ -177,4 +240,3 @@ function startSnowEffect() {
 
   animate();
 }
-
