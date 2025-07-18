@@ -1,5 +1,9 @@
 // main.js - Efek interaktif ringan untuk VORA
 
+const supabaseUrl = "https://eagsfjcsjmmholoekiln.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhZ3NmamNzam1taG9sb2VraWxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4MDg2NjAsImV4cCI6MjA2ODM4NDY2MH0.uG-6ofh_TwvuOLpboOp94PbG1FyBQrCerwutuuq0Xa8";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
 document.addEventListener("DOMContentLoaded", () => {
   // Logo scroll to top
   const logo = document.querySelector(".logo");
@@ -70,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   const audio = document.getElementById("bgm");
                   audio.volume = 0.2;
                   window.onbeforeunload = () => audio.pause();
-                </script>
+                <\/script>
               </body>
             </html>
           `);
@@ -88,6 +92,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Efek salju
   startSnowEffect();
+
+  // Rating interaktif
+  // Rating interaktif
+  // Rating interaktif
+  const ratingStars = document.querySelectorAll("#rating span");
+  const ratingValue = document.getElementById("ratingValue");
+
+  let selectedRating = 0;
+
+  if (ratingStars && ratingValue) {
+    ratingStars.forEach((star) => {
+      const starValue = parseInt(star.getAttribute("data-value"));
+
+      // Hover
+      star.addEventListener("mouseover", () => {
+        updateStarVisual(starValue);
+      });
+
+      // Reset ke selected saat mouse keluar
+      star.addEventListener("mouseout", () => {
+        updateStarVisual(selectedRating);
+      });
+
+      // Klik bintang
+      star.addEventListener("click", () => {
+        selectedRating = starValue;
+        ratingValue.value = selectedRating;
+        updateStarVisual(selectedRating);
+      });
+    });
+  }
+
+  function updateStarVisual(val) {
+    ratingStars.forEach((s) => {
+      const sVal = parseInt(s.getAttribute("data-value"));
+      s.classList.toggle("active", sVal <= val);
+    });
+  }
+
+  // Testimoni form
+  const form = document.getElementById("testimoniForm");
+  if (form) {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const nama = document.getElementById("nama").value;
+      const pesan = document.getElementById("pesan").value;
+      const rating = parseInt(document.getElementById("ratingValue").value);
+
+      if (!rating || rating < 1 || rating > 5) {
+        alert("Silakan beri rating sebelum mengirim testimoni.");
+        return;
+      }
+
+      const { data, error } = await supabase.from("testimoni").insert([
+        {
+          nama,
+          pesan,
+          rating,
+        },
+      ]);
+
+      if (error) {
+        alert("Gagal mengirim testimoni. Silakan coba lagi.");
+        console.error(error);
+        return;
+      }
+
+      alert(`Terima kasih, ${nama}! Testimoni kamu telah dikirim.`);
+      form.reset();
+      ambilTestimoni();
+    });
+  }
+
+  // Ambil testimoni jika ada elemen list
+  if (document.getElementById("testimoni-list")) {
+    ambilTestimoni();
+  }
 });
 
 // Data produk
@@ -144,7 +225,7 @@ function startSnowEffect() {
 
   function drawFlakes() {
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
     ctx.beginPath();
     flakes.forEach((f) => {
       ctx.moveTo(f.x, f.y);
@@ -178,3 +259,29 @@ function startSnowEffect() {
   animate();
 }
 
+async function ambilTestimoni() {
+  const { data, error } = await supabase
+    .from("testimoni")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  if (error) {
+    console.error("Gagal ambil testimoni:", error.message);
+    return;
+  }
+
+  const listEl = document.getElementById("testimoni-list");
+  listEl.innerHTML = "";
+
+  data.forEach((item) => {
+    const div = document.createElement("div");
+    div.className = "testimoni-item";
+    div.innerHTML = `
+      <h4>${item.nama}</h4>
+      <div class="rating">${"★".repeat(item.rating)}${"☆".repeat(5 - item.rating)}</div>
+      <p>${item.pesan}</p>
+    `;
+    listEl.appendChild(div);
+  });
+}
